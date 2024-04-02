@@ -1,12 +1,16 @@
-# Define here the models for your scraped items
-#
-# See documentation in:
-# https://docs.scrapy.org/en/latest/topics/items.html
-
-import scrapy
 
 
-class AirqualityscraperItem(scrapy.Item):
+from scrapy import Field,Item
+
+
+class AirqualityscraperItem(Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
-    pass
+    
+    Title = Field()
+    CountryName = Field()
+    CountryRank = Field()
+    CountryAirQuality = Field()
+
+class CityAirQuality(Item):
+    ...
