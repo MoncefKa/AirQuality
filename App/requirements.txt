@@ -2,3 +2,4 @@ scrapy
 scrapy-playwright
 numpy
 pandas
+apache-airflow==2.8.4

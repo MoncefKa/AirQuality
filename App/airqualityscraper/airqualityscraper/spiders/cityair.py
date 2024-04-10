@@ -5,15 +5,17 @@ from scrapy_playwright.page import PageMethod
 class CityAirSpider(Spider):
     
     name="cityspider"
-    start_urls=["https://www.iqair.com/world-most-polluted-cities/"]
-    
+    NUM_PAGES=5
+    start_urls=[f"https://www.iqair.com/world-most-polluted-cities?sort=-rank&page={i+1}&perPage=50&cities=" for i in range(NUM_PAGES)]
     def start_requests(self):
         meta=dict(
             playwright=True,
             playwright_include_page=True,
             playwright_page_methods=[PageMethod("wait_for_selector","div.table-body")]
         )
-        yield Request(url=self.start_urls[0],callback=self.parse_city,meta=meta)
+
+        for url in self.start_urls:
+            yield Request(url=url,callback=self.parse_city,meta=meta)
         
     def parse_city(self,response:Response):
         
@@ -29,5 +31,6 @@ class CityAirSpider(Spider):
                 for index,value in enumerate(city_rank):
                     val_city[value]=row.xpath(f".//tr[{index+1}]//text()").getall()
                 arr.append(val_city)
-            
-            yield {"d":arr}
+
+            yield {"total":[arr]}
+
