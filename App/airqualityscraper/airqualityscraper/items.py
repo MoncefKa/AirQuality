@@ -13,4 +13,5 @@ class AirqualityscraperItem(Item):
     CountryAirQuality = Field()
 
 class CityAirQuality(Item):
-    ...
+    
+    CityAir=Field()
